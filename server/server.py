@@ -15,5 +15,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             data = conn.recv(1024)
             if not data:
                 break
-            print(f'I JUST RECEIVED FOLLOWING DATA:{data}')
-            conn.sendall(data)
+            print(f'I JUST RECEIVED FOLLOWING DATA:{data.decode("utf-8")}')
+            result = str.encode("server " + data.decode('utf-8'), 'utf-8')
+            conn.sendall(result)

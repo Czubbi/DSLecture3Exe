@@ -7,9 +7,7 @@ HOST = '127.0.0.1'  # The server's hostname or IP address
 PORT = 65439        # The port used by the server
 
 filename = '../client_files/text1.txt'
-print(os.path.getsize(filename))
 file_size = os.path.getsize(filename)
-print(file_size)
 BUFFER_SIZE = 200
 SEPARATOR = '<SEPARATOR>'
 
@@ -23,6 +21,5 @@ def send_file(filename, file_size, host=HOST, port=PORT):
                     if not bytes_read:
                         break
                     s.sendall(bytes_read)
-            data = s.recv(1024)
 
 send_file(filename=filename, file_size=file_size)

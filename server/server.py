@@ -14,7 +14,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
     conn, addr = s.accept()
-    conn.settimeout(3.0)
+    conn.settimeout(4.0)
     with conn:
         print('Connected by', addr)
 

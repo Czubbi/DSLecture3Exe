@@ -14,6 +14,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
     conn, addr = s.accept()
+    conn.settimeout(3.0)
     with conn:
         print('Connected by', addr)
 
@@ -21,19 +22,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         filename, filesize = data.split(SEPARATOR)
         filename = os.path.basename(filename)
         filesize = int(filesize)
-
-        with open(os.path.join('server_files',filename), "wb") as f:
-            i = 0 
-            
-            while True:
-                print(f'iter: {i}')
-                bytes_read = conn.recv(BUFFER_SIZE)
-                print(repr(bytes_read))
-                if not bytes_read:
-                    break
-                f.write(bytes_read)
-                i += 1
-        conn.sendall(bytes('siema', 'u'))
-        print('end of conn')
-
-    print('123')
+        with open(os.path.join('../server_files', filename), "wb") as f:
+            try:
+                while True:
+                    bytes_read = conn.recv(BUFFER_SIZE)
+                    if not bytes_read:
+                        break
+                    f.write(bytes_read)
+            except:
+                print("Connection timeout, data saved.")
